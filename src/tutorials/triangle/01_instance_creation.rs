@@ -109,7 +109,7 @@ fn main() {
                 .expect("Failed to retrieve display handle")
                 .as_raw(),
         )
-        .unwrap(),
+        .expect("Failed to retrieve required extensions from display handle"),
     );
     event_loop
         .run_app(&mut app)
