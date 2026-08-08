@@ -9,6 +9,10 @@ publish = false
 winit = "0.30"
 ash = "0.38"
 
+[[bin]]
+name = "00"
+path = "src/tutorials/triangle/00_base_code.rs"
+
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
 type_complexity = "warn"
