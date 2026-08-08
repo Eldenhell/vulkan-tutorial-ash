@@ -13,10 +13,12 @@ ash-window = "0.13"
 [[bin]]
 name = "00"
 path = "src/tutorials/triangle/00_base_code.rs"
-
 [[bin]]
 name = "01"
 path = "src/tutorials/triangle/01_instance_creation.rs"
+[[bin]]
+name = "02"
+path = "src/tutorials/triangle/02_validation_layers.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
