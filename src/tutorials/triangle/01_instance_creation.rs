@@ -88,6 +88,14 @@ impl VulkanApp {
     }
 }
 
+impl Drop for VulkanApp {
+    fn drop(&mut self) {
+        unsafe {
+            self.instance.destroy_instance(None);
+        }
+    }
+}
+
 fn main() {
     let event_loop = EventLoop::new().expect("Failed to create EventLoop");
 
