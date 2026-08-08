@@ -5,7 +5,7 @@ use winit::{
     window::{Window, WindowAttributes},
 };
 
-const WINDOW_TITLE: &'static str = "00.Base Code";
+const WINDOW_TITLE: &str = "00.Base Code";
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 
