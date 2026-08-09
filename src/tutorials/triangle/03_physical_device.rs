@@ -272,7 +272,75 @@ impl VulkanApp {
         panic!("No device found with the required properties and features");
     }
 
-    // I recommend using the score version but this one is interesting for learning purpose with many things displayed to better understand the API
+    // This score function has to be adapted to your own use case
+    fn device_score(instance: &Instance, device: &vk::PhysicalDevice) -> u32 {
+        let properties = unsafe { instance.get_physical_device_properties(*device) };
+
+        let features = unsafe { instance.get_physical_device_features(*device) };
+        let mut vk13_features = vk::PhysicalDeviceVulkan13Features::default();
+        let mut features2 = vk::PhysicalDeviceFeatures2::default().push_next(&mut vk13_features);
+        unsafe {
+            instance.get_physical_device_features2(*device, &mut features2);
+        }
+
+        let queue_families =
+            unsafe { instance.get_physical_device_queue_family_properties(*device) };
+        let device_extensions = unsafe {
+            instance
+                .enumerate_device_extension_properties(*device)
+                .expect("Failed to retrieve device extensions properties")
+        };
+
+        // Determine if the device type is suitable
+        let mut score = match properties.device_type {
+            vk::PhysicalDeviceType::CPU | vk::PhysicalDeviceType::OTHER => 0,
+            vk::PhysicalDeviceType::DISCRETE_GPU => 1000,
+            vk::PhysicalDeviceType::VIRTUAL_GPU => 10,
+            vk::PhysicalDeviceType::INTEGRATED_GPU => 1,
+            _ => unreachable!(),
+        };
+
+        let supports_vk_13 = properties.api_version >= vk::API_VERSION_1_3;
+
+        // Check queue supports
+        println!("\tSupport Queue Family: {}", queue_families.len());
+        println!("\t\tQueue Count | Graphics, Compute, Transfer, Sparse Binding");
+        let supports_graphics_queue = queue_families
+            .iter()
+            .any(|qf| qf.queue_flags.contains(vk::QueueFlags::GRAPHICS));
+
+        // Check support for device extensions
+        let required_extensions = [ash::khr::swapchain::NAME];
+        let mut supports_required_extensions = true;
+        for ext in required_extensions {
+            supports_required_extensions = supports_required_extensions
+                && device_extensions.iter().any(|e| {
+                    *e.extension_name_as_c_str()
+                        .expect("Failed to retrieve device extension name")
+                        == *ext
+                });
+        }
+
+        // Check support for required features
+        let supports_required_features =
+            features.geometry_shader == 1 && vk13_features.dynamic_rendering == 1;
+
+        // The device isn't suitable
+        if !(supports_vk_13
+            && supports_graphics_queue
+            && supports_required_extensions
+            && supports_required_features
+            && score > 0)
+        {
+            return 0;
+        }
+
+        // Increment the score for optional features, extensions, ..
+        score += properties.limits.max_image_dimension2_d;
+
+        score
+    }
+
     fn is_device_suitable(instance: &Instance, device: &vk::PhysicalDevice) -> bool {
         let properties = unsafe { instance.get_physical_device_properties(*device) };
 
