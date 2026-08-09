@@ -57,8 +57,8 @@ struct VulkanApp {
     debug_callback: vk::DebugUtilsMessengerEXT,
 
     physical_device: vk::PhysicalDevice,
-    device: ash::Device,
-    graphics_queue: vk::Queue,
+    device: Option<ash::Device>,
+    graphics_queue: Option<vk::Queue>,
 }
 
 impl ApplicationHandler for VulkanApp {
@@ -81,21 +81,38 @@ impl ApplicationHandler for VulkanApp {
         let surface =
             VulkanApp::create_surface(&self.entry, &self.instance, &display_handle, &window);
 
+        let (device, graphics_queue) = VulkanApp::create_logical_device(
+            &self.instance,
+            &self.physical_device,
+            &self.surface_loader,
+            &surface,
+        );
+
         self.surface = Some(surface);
         self.window = Some(window);
+        self.device = Some(device);
+        self.graphics_queue = Some(graphics_queue);
     }
 
     // Here we need to drop window, surface, swapchains, etc
     #[allow(unused)]
     fn suspended(&mut self, event_loop: &winit::event_loop::ActiveEventLoop) {
-        self.window = None;
-        if self.surface.is_some() {
-            unsafe {
-                self.surface_loader
-                    .destroy_surface(self.surface.unwrap(), None);
+        unsafe {
+            if let Some(device) = self.device.take() {
+                device.device_wait_idle().unwrap();
+
+                device.destroy_device(None);
             }
-            self.surface = None;
+
+            if let Some(surface) = self.surface.take() {
+                self.surface_loader.destroy_surface(surface, None);
+            }
         }
+
+        self.window = None;
+        self.surface = None;
+        self.device = None;
+        self.graphics_queue = None;
     }
 
     #[allow(unused)]
@@ -130,8 +147,8 @@ impl VulkanApp {
         let surface_loader = surface::Instance::new(&entry, &instance);
 
         let physical_device = VulkanApp::pick_physical_device(&instance);
-        let (device, graphics_queue) =
-            VulkanApp::create_logical_device(&instance, &physical_device);
+        let device = None;
+        let graphics_queue = None;
 
         Self {
             window,
@@ -497,16 +514,21 @@ impl VulkanApp {
     fn create_logical_device(
         instance: &Instance,
         physical_device: &vk::PhysicalDevice,
+        surface_loader: &surface::Instance,
+        surface: &vk::SurfaceKHR,
     ) -> (ash::Device, vk::Queue) {
         let queue_families =
             unsafe { instance.get_physical_device_queue_family_properties(*physical_device) };
 
-        let graphics_queue_index = queue_families
+        let graphics_queue_index = unsafe {
+            queue_families
             .iter()
-            .position(|qf| qf.queue_flags.contains(vk::QueueFlags::GRAPHICS))
+            .enumerate()
+            .position(|(index, qf)| qf.queue_flags.contains(vk::QueueFlags::GRAPHICS) && surface_loader.get_physical_device_surface_support(*physical_device, index as u32, *surface).expect("Failed to retrieve physical device surface support"))
             .expect(
                 "Failed to get the graphics queue family index for the physical device selected",
-            ) as u32;
+            ) as u32
+        };
 
         // Between [0.0, 1.0] - Influence the scheduling of command buffer execution
         // To create multiple queues, expend this array
@@ -566,14 +588,14 @@ impl VulkanApp {
 impl Drop for VulkanApp {
     fn drop(&mut self) {
         unsafe {
-            self.device.device_wait_idle().unwrap();
+            if let Some(device) = self.device.take() {
+                device.device_wait_idle().unwrap();
 
-            self.device.destroy_device(None);
+                device.destroy_device(None);
+            }
 
-            // Already destroyed on suspended event. This is just in case
-            if self.surface.is_some() {
-                self.surface_loader
-                    .destroy_surface(self.surface.unwrap(), None);
+            if let Some(surface) = self.surface.take() {
+                self.surface_loader.destroy_surface(surface, None);
             }
             self.debug_utils_loader
                 .destroy_debug_utils_messenger(self.debug_callback, None);
