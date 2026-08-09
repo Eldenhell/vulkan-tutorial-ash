@@ -19,6 +19,9 @@ path = "src/tutorials/triangle/01_instance_creation.rs"
 [[bin]]
 name = "02"
 path = "src/tutorials/triangle/02_validation_layers.rs"
+[[bin]]
+name = "03"
+path = "src/tutorials/triangle/03_physical_device.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
