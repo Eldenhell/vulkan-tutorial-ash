@@ -272,6 +272,7 @@ impl VulkanApp {
         panic!("No device found with the required properties and features");
     }
 
+    #[allow(unused)]
     // This score function has to be adapted to your own use case
     fn device_score(instance: &Instance, device: &vk::PhysicalDevice) -> u32 {
         let properties = unsafe { instance.get_physical_device_properties(*device) };
