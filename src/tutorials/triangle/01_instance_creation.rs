@@ -79,12 +79,12 @@ impl VulkanApp {
         let create_info = vk::InstanceCreateInfo::default()
             .application_info(&app_info)
             .enabled_extension_names(&extension_names);
-        let instance = unsafe {
+
+        unsafe {
             entry
                 .create_instance(&create_info, None)
                 .expect("Failed to create vulkan instance")
-        };
-        instance
+        }
     }
 }
 
