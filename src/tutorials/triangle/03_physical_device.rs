@@ -430,9 +430,9 @@ impl VulkanApp {
 
         // Check support for device extensions
         let required_extensions = [ash::khr::swapchain::NAME];
-        let mut is_required_extensions_available = true;
+        let mut supports_required_extensions_available = true;
         for ext in required_extensions {
-            is_required_extensions_available = is_required_extensions_available
+            supports_required_extensions_available = supports_required_extensions_available
                 && device_extensions.iter().any(|e| {
                     *e.extension_name_as_c_str()
                         .expect("Failed to retrieve device extension name")
@@ -441,14 +441,14 @@ impl VulkanApp {
         }
 
         // Check support for certain features
-        let is_required_features_available =
+        let supports_required_features =
             features.geometry_shader == 1 && vk13_features.dynamic_rendering == 1;
 
         type_suitable
             && supports_vk_13
             && supports_graphics_queue
-            && is_required_features_available
-            && is_required_extensions_available
+            && supports_required_features
+            && supports_required_extensions_available
     }
 }
 
