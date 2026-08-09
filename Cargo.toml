@@ -25,6 +25,9 @@ path = "src/tutorials/triangle/03_physical_device.rs"
 [[bin]]
 name = "04"
 path = "src/tutorials/triangle/04_logical_device.rs"
+[[bin]]
+name = "05"
+path = "src/tutorials/triangle/05_window_surface.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
