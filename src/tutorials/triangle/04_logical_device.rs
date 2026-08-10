@@ -14,7 +14,7 @@ use winit::{
     window::{Window, WindowAttributes},
 };
 
-const WINDOW_TITLE: &str = "02. Validation Layers";
+const WINDOW_TITLE: &str = "04. Logical device";
 const WINDOW_WIDTH: u32 = 800;
 const WINDOW_HEIGHT: u32 = 600;
 
