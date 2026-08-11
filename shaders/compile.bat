@@ -1,0 +1,1 @@
+C:/VulkanSDK/1.4.357.0/bin/slangc.exe src/08_base_shaders.slang -target spirv -profile spirv_1_4 -emit-spirv-directly -fvk-use-entrypoint-name -entry vertMain -entry fragMain -o spv/08_base_shaders.spv

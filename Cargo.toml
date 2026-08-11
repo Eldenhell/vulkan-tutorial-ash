@@ -35,6 +35,9 @@ path = "src/tutorials/triangle/06_swap_chain_creation.rs"
 [[bin]]
 name = "07"
 path = "src/tutorials/triangle/07_image_views.rs"
+[[bin]]
+name = "08"
+path = "src/tutorials/triangle/08_shader_modules.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
