@@ -38,6 +38,9 @@ path = "src/tutorials/triangle/07_image_views.rs"
 [[bin]]
 name = "08"
 path = "src/tutorials/triangle/08_shader_modules.rs"
+[[bin]]
+name = "09"
+path = "src/tutorials/triangle/09_fixed_functions.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
