@@ -41,6 +41,9 @@ path = "src/tutorials/triangle/08_shader_modules.rs"
 [[bin]]
 name = "09"
 path = "src/tutorials/triangle/09_fixed_functions.rs"
+[[bin]]
+name = "10"
+path = "src/tutorials/triangle/10_graphic_pipeline.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
