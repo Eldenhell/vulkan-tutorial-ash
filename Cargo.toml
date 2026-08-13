@@ -47,6 +47,9 @@ path = "src/tutorials/triangle/10_graphic_pipeline.rs"
 [[bin]]
 name = "11"
 path = "src/tutorials/triangle/11_command_buffers.rs"
+[[bin]]
+name = "12"
+path = "src/tutorials/triangle/12_rendering_and_presentation.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
