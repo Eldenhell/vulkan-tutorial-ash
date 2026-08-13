@@ -50,6 +50,10 @@ path = "src/tutorials/triangle/11_command_buffers.rs"
 [[bin]]
 name = "12"
 path = "src/tutorials/triangle/12_rendering_and_presentation.rs"
+[[bin]]
+name = "13"
+path = "src/tutorials/triangle/13_frames_in_flight.rs"
+
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
