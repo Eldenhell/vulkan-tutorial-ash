@@ -62,6 +62,9 @@ path = "src/tutorials/vertex_buffer/15_input_description.rs"
 [[bin]]
 name = "16"
 path = "src/tutorials/vertex_buffer/16_buffer_creation.rs"
+[[bin]]
+name = "17"
+path = "src/tutorials/vertex_buffer/17_staging_buffer.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
