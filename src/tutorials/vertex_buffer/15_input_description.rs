@@ -957,7 +957,7 @@ impl VulkanApp {
     ) -> vk::Pipeline {
         let shader_module = VulkanApp::create_shader_module(
             device,
-            include_bytes!("../../../shaders/bin/08_base_shaders.spv"),
+            include_bytes!("../../../shaders/bin/15_vertex_buffers.spv"),
         );
         let shader_stages = VulkanApp::get_pipeline_shader_stages_info(&shader_module);
 
