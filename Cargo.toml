@@ -56,6 +56,9 @@ path = "src/tutorials/triangle/13_frames_in_flight.rs"
 [[bin]]
 name = "14"
 path = "src/tutorials/triangle/14_recreate_swapchain.rs"
+[[bin]]
+name = "15"
+path = "src/tutorials/vertex_buffer/15_input_description.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
