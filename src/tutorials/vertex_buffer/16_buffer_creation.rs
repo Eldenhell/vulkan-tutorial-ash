@@ -13,7 +13,7 @@ use ash::{
     util::{Align, read_spv},
     vk,
 };
-use vulkan_tuto_ash::utils::vk_to_string;
+use vulkan_tuto_ash::utils::{self, vk_to_string};
 use winit::{
     application::ApplicationHandler,
     event::WindowEvent,
@@ -142,6 +142,7 @@ struct VulkanApp {
     in_flight_fences: Option<Vec<vk::Fence>>,
 
     frame_index: usize,
+    fps_counter: utils::FpsCounter,
 }
 
 impl ApplicationHandler for VulkanApp {
@@ -314,6 +315,7 @@ impl ApplicationHandler for VulkanApp {
                     &[self.vertex_buffer.unwrap()],
                     &mut self.frame_index,
                 );
+                // println!("fps: {}", self.fps_counter.tick());
                 self.window.as_ref().unwrap().request_redraw();
             },
             _ => (),
@@ -350,6 +352,7 @@ impl VulkanApp {
         let render_finished_semaphores = None;
         let in_flight_fences = None;
         let frame_index = 0;
+        let fps_counter = utils::FpsCounter::new(100);
 
         Self {
             window,
@@ -374,6 +377,7 @@ impl VulkanApp {
             render_finished_semaphores,
             in_flight_fences,
             frame_index,
+            fps_counter,
         }
     }
 
