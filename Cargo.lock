@@ -436,6 +436,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "glam"
+version = "0.33.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c426daf70099baff33fac0ba85151c42424861c56828cef9ba02dacb78eb6b26"
+
+[[package]]
 name = "hashbrown"
 version = "0.17.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1450,6 +1456,7 @@ version = "0.0.1"
 dependencies = [
  "ash",
  "ash-window",
+ "glam",
  "num",
  "winit",
 ]
