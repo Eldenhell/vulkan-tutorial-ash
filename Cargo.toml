@@ -72,6 +72,9 @@ path = "src/tutorials/vertex_buffer/18_index_buffer.rs"
 [[bin]]
 name = "19"
 path = "src/tutorials/uniform_buffer/19_descriptor_layout_and_buffer.rs"
+[[bin]]
+name = "20"
+path = "src/tutorials/uniform_buffer/20_descriptor_pool.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
