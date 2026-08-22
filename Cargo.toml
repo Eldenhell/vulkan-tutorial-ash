@@ -82,6 +82,9 @@ path = "src/tutorials/texture_mapping/21_images.rs"
 [[bin]]
 name = "22"
 path = "src/tutorials/texture_mapping/22_image_view_and_sampler.rs"
+[[bin]]
+name = "23"
+path = "src/tutorials/texture_mapping/23_combined_image_sampler.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
