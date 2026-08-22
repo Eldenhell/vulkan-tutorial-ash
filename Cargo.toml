@@ -79,6 +79,9 @@ path = "src/tutorials/uniform_buffer/20_descriptor_pool.rs"
 [[bin]]
 name = "21"
 path = "src/tutorials/texture_mapping/21_images.rs"
+[[bin]]
+name = "22"
+path = "src/tutorials/texture_mapping/22_image_view_and_sampler.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
