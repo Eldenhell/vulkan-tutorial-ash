@@ -11,6 +11,7 @@ ash = "0.38"
 ash-window = "0.13"
 num = "0.4.3"
 glam = "0.33.5"
+image = "0.25.10"
 
 [[bin]]
 name = "00"
@@ -75,6 +76,9 @@ path = "src/tutorials/uniform_buffer/19_descriptor_layout_and_buffer.rs"
 [[bin]]
 name = "20"
 path = "src/tutorials/uniform_buffer/20_descriptor_pool.rs"
+[[bin]]
+name = "21"
+path = "src/tutorials/texture_mapping/21_images.rs"
 
 [workspace.lints.clippy]
 # https://rust-lang.github.io/rust-clippy/master/index.html
